@@ -207,40 +207,20 @@ print(f"Registros com dados completos: {df.dropna().shape[0]}")
 
         <h2 id="limpeza">2. NORMALIZAÇÃO E LIMPEZA DOS DADOS</h2>
 
-        <h3>2.1 Problemas Identificados</h3>
+        <h3>2.1 Que problemas poderíamos imaginar ?</h3>
         <ol>
             <li><strong>Encoding:</strong> Caracteres especiais (Ã, ©, ª)</li>
-            <li><strong>Formatação:</strong> Texto em CAPS, espaçamentos irregulares</li>
-            <li><strong>Inconsistências:</strong> Variações na escrita de valores monetários</li>
+            <li><strong>Formatação:</strong> espaçamentos irregulares</li>
+            <li><strong>Inconsistências:</strong> Outros caracteres que não havíamos pensado?</li>
         </ol>
 
         <h3>2.2 Código de Limpeza</h3>
-        <pre><code>def clean_text(text):
-    """Função para limpeza básica de texto jurídico"""
-    if pd.isna(text):
-        return ""
-    
-    # Correção de encoding comum
-    replacements = {
-        'ÃƒÂ¡': 'á', 'Ãƒ ': 'à', 'ÃƒÂ£': 'ã', 'ÃƒÂ©': 'é', 'ÃƒÂ­': 'í', 
-        'ÃƒÂ³': 'ó', 'ÃƒÂº': 'ú', 'ÃƒÂ§': 'ç', 'ÃƒÂª': 'ê', 'ÃƒÂ´': 'ô'
-    }
-    
-    text = str(text)
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    
-    # Normalização de espaços
-    text = re.sub(r'\s+', ' ', text)
-    text = text.strip()
-    
-    return text
-
-# Aplicar limpeza
-df['ds_fatos_clean'] = df['ds_fatos'].apply(clean_text)
-df['ds_Pedidos_clean'] = df['ds_Pedidos'].apply(clean_text)
+        <pre><code># FUNÇÃO: df.head()
+# O QUE FAZ: mostra as primeiras 5 linhas do DataFrame
+# SINTAXE: df.head(numero_de_linhas)
+            df.head(3)
 </code></pre>
-
+            
         <h2 id="regex">3. EXPRESSÕES REGULARES APLICADAS</h2>
 
         <h3>3.1 Identificação de Processos sobre Crédito Consignado</h3>
