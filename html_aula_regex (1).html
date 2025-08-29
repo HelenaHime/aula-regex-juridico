@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Expressões Regulares para Processos Jurídicos</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f8f9fa; 
+            color: #333;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            color: #2c3e50; 
+            text-align: center; 
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 40px;
+        }
+        h3 { 
+            color: #2c3e50; 
+            margin-top: 30px;
+        }
+        pre { 
+            background: #2d3748; 
+            color: #e2e8f0;
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        code {
+            background: #f1f5f9;
+            color: #1e293b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        pre code {
+            background: none;
+            color: #e2e8f0;
+            padding: 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .link { 
+            background: #3498db; 
+            color: white; 
+            padding: 12px 24px; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            display: inline-block; 
+            margin: 15px 5px 15px 0;
+            transition: background 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+        .gif-intro {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .gif-intro img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Material Didático: Expressões Regulares para Análise de Processos Jurídicos</h1>
+        
+        <div class="highlight">
+            <strong>🎯 Objetivo da Aula:</strong> Desenvolver competências práticas em expressões regulares para extrair informações específicas de textos jurídicos, aplicando-as ao desafio de identificar processos sobre crédito consignado e valores de indenização.
+        </div>
+
+        <div class="gif-intro">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Cat.png" alt="Gato estudioso" style="width: 100px;" />
+            <p><em>Vamos começar nossa jornada pelo mundo das expressões regulares! 🚀</em></p>
+        </div>
+
+        <div class="toc">
+            <h3>📋 Sumário</h3>
+            <ul>
+                <li><a href="#setup">0. Setup Inicial</a></li>
+                <li><a href="#estrutura">1. Estrutura do Dataset</a></li>
+                <li><a href="#importacao">2. Importação dos Dados</a></li>
+                <li><a href="#verificacao">3. Verificação Pós-Importação</a></li>
+                <li><a href="#limpeza">4. Normalização e Limpeza dos Dados</a></li>
+                <li><a href="#regex">5. Expressões Regulares Aplicadas</a></li>
+                <li><a href="#validacao">6. Validação do Modelo</a></li>
+            </ul>
+        </div>
+
+        <h2 id="setup">0. SETUP INICIAL 🔧</h2>
+        
+        <div class="gif-intro">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" alt="Setup" style="width: 80px;" />
+        </div>
+
+        <pre><code>pip install pandas</code></pre>
+
+        <pre><code>import pandas as pd
+import re
+import numpy as np</code></pre>
+
+        <h2 id="estrutura">1. ESTRUTURA DO DATASET 📊</h2>
+
+        <div class="gif-intro">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bar%20Chart.png" alt="Dados" style="width: 80px;" />
+        </div>
+
+        <h3>1.1 Estrutura do dataset</h3>
+        <p>Nosso dataset (<code>dataset_clinica20252.csv</code>) contém <strong>19.800 observações</strong> com as seguintes colunas:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Campo</th>
+                    <th>Descrição</th>
+                    <th>Características</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>cd_causa</code></td>
+                    <td>Código identificador do caso</td>
+                    <td>10 caracteres, formato: CIB + números</td>
+                </tr>
+                <tr>
+                    <td><code>cd_atendimento</code></td>
+                    <td>Número do processo</td>
+                    <td>25 caracteres, formato: NNNNNN-XX.YYYY.Z.AA.BBBB</td>
+                </tr>
+                <tr>
+                    <td><code>ds_Acao_Judicial</code></td>
+                    <td>Tipo da ação</td>
+                    <td>Predominantemente "90 - ACAO DE REPARACAO DE DANOS"</td>
+                </tr>
+                <tr>
+                    <td><code>ds_fatos</code></td>
+                    <td>Descrição dos fatos</td>
+                    <td>Texto longo (até 5.000 caracteres)</td>
+                </tr>
+                <tr>
+                    <td><code>ds_Pedidos</code></td>
+                    <td>Pedidos do autor</td>
+                    <td>Texto longo (até 5.000 caracteres)</td>
+                </tr>
+                <tr>
+                    <td><code>ds_Qualificacao</code></td>
+                    <td>Qualificação das partes</td>
+                    <td>Dados das partes envolvidas</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="importacao">2. IMPORTAÇÃO DOS DADOS 📂</h2>
+
+        <div class="gif-intro">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/File%20Folder.png" alt="Importação" style="width: 80px;" />
+        </div>
+
+        <pre><code># Importação do dataset
+df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')</code></pre>
+
+        <h2 id="verificacao">3. VERIFICAÇÃO PÓS-IMPORTAÇÃO ✅</h2>
+
+        <div class="gif-intro">
+            <img src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif" alt="Gato investigando" />
+        </div>
+
+        <h3>Verificação pós importação</h3>
+
+        <pre><code># FUNÇÃO: len()
+# O QUE FAZ: conta o número de linhas (registros) no DataFrame
+# SINTAXE: len(dataframe)
+len(df)</code></pre>
+
+        <pre><code># FUNÇÃO: list()
+# O QUE FAZ: converte o índice(nome da coluna) das colunas em uma lista que  
+# podemos ler facilmente
+# SINTAXE: list(df.columns)
+list(df.columns)</code></pre>
+
+        <h4>Número de NAs</h4>
+
+        <pre><code># FUNÇÃO: df.dropna()
+# O QUE FAZ: remove todas as linhas que têm pelo menos um valor vazio (NaN)
+# SINTAXE: df.dropna()  
+
+# FUNÇÃO: .shape[0]
+# O QUE FAZ: retorna o número de linhas do DataFrame resultante
+# SINTAXE: dataframe.shape[0]  
+
+#df.dropna().shape[0]
+df.dropna().shape[0]</code></pre>
+
+        <h2 id="limpeza">4. NORMALIZAÇÃO E LIMPEZA DOS DADOS 🧹</h2>
+
+        <div class="gif-intro">
+            <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Gato limpando dados" />
+        </div>
+
+        <pre><code># FUNÇÃO: df.head()
+# O QUE FAZ: mostra as primeiras 5 linhas do DataFrame
+# SINTAXE: df.head(numero_de_linhas)
+df.head(3)</code></pre>
+
+        <pre><code># FUNÇÃO: df['coluna'].str.contains()
+# O QUE FAZ: busca por padrões específicos dentro de uma coluna de texto
+# SINTAXE: df['coluna'].str.contains('padrão')
+problemas_encoding = df['ds_fatos'].str.contains('Ãª|Ã©|Ã¡|Ã³|Ã­|Ãº|Ã§|Ã£|©', \
+                                                  na=False)  
+problemas_encoding.sum()</code></pre>
+
+        <div class="highlight">
+            <strong>💡 Configurar pandas para quebrar texto automaticamente</strong>
+        </div>
+
+        <pre><code># FUNÇÃO: pd.set_option()
+# O QUE FAZ: define largura máxima antes de quebrar o texto
+# SINTAXE: pd.set_option('display.width', valor) 
+pd.set_option('display.width', 80)
+pd.set_option('display.max_colwidth', 80)
+print(df[problemas_encoding]['ds_fatos'])</code></pre>
+
+        <h3>Função para ver o inteiro teor da célula</h3>
+
+        <pre><code>import textwrap 
+
+for indice, texto in df[problemas_encoding]['ds_fatos'].head(5).items():    
+    print(f"Registro {indice}:")    
+    print(textwrap.fill(texto, width=80))    
+    print("-" * 80)</code></pre>
+
+        <h3>Verificar problemas com espaçamento</h3>
+
+        <pre><code>problemas_espaco = df['ds_fatos'].str.contains('  +', \
+                                                  na=False)  
+problemas_espaco.sum()</code></pre>
+
+        <pre><code>import textwrap 
+
+for indice, texto in df[problemas_espaco]['ds_fatos'].head(5).items():    
+    print(f"Registro {indice}:")    
+    print(textwrap.fill(texto, width=80))    
+    print("-" * 80)</code></pre>
+
+        <pre><code>caracteres_corrompidos = df['ds_fatos'].str.contains('', na=False)
+caracteres_corrompidos.sum()</code></pre>
+
+        <h3>Limpar espacamento duplo e símbolo</h3>
+
+        <pre><code># FUNÇÃO: df['coluna'].str.replace()
+# O QUE FAZ: substitui caracteres específicos por outros
+# SINTAXE: df['coluna'].str.replace('caractere_antigo', 'caractere_novo')
+#COMPLETAR: caracteres específicos 
+df['ds_fatos'] = df['ds_fatos'].str.replace('', '')
+df['ds_Pedidos'] = df['ds_Pedidos'].str.replace('', '') </code></pre>
+
+        <pre><code># FUNÇÃO: df['coluna'].str.replace() com regex
+# O QUE FAZ: substitui múltiplos espaços por um único espaço
+# SINTAXE: df['coluna'].str.replace('padrão_regex', 'substituto', regex=True)
+#COMPLETAR: espacamento duplo
+#padrao_regex - string raw: r'\s+' 
+df['ds_fatos'] = df['ds_fatos'].str.replace(r'\s+', ' ', regex=True)
+df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)</code></pre>
+
+        <h2 id="regex">5. EXPRESSÕES REGULARES APLICADAS 🎯</h2>
+
+        <div class="gif-intro">
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzR2aXE0dDR5bHo4dXkwcnR6MHRsMTNsZDNmOXl5dWNycjZqaGM5OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Gato hackeando" />
+        </div>
+
+        <h3>Como filtrar processos sobre empréstimo consignado</h3>
+
+        <div class="highlight">
+            <strong>Ver valores únicos como output direto</strong>
+        </div>
+
+        <pre><code># FUNÇÃO: df['coluna'].unique()
+# O QUE FAZ: retorna array com todos os valores únicos da coluna
+# SINTAXE: df['coluna'].unique() 
+valores_unicos_fatos = df['ds_fatos'].unique()  
+
+# Para ver o output, simplesmente chame a variável:
+valores_unicos_fatos
+#:10 apenas os 10 primeiros </code></pre>
+
+        <pre><code>for indice, texto in enumerate(valores_unicos_fatos[:1000]):    
+    print(f"valor único {indice + 1}")    
+    print(textwrap.fill(str(texto), width=80))    
+    print("-" * 80)</code></pre>
+
+        <pre><code># FUNÇÃO: re.compile()
+# O QUE FAZ: cria padrão que busca empréstimo E consignado no mesmo texto
+# SINTAXE: re.compile(r'padrão')
+#COMPLETAR: 
+padrao_emprestimo_consignado = re.compile(r'empréstimo\sconsignado|empréstimo\spor\sconsignação|' \
+                                          r'empréstimos\sconsignados|contrato\sde\sconsignação')</code></pre>
+
+        <pre><code>#COMPLETAR: 
+resultados = [] 
+
+for texto in df['ds_fatos']:    
+    matches = padrao_emprestimo_consignado.findall(texto)    
+    if len(matches) > 0:        
+        resultados.append(True)    
+    else:        
+        resultados.append(False)</code></pre>
+
+        <h3>Como resolvemos o erro acima?</h3>
+
+        <pre><code># FUNÇÃO: for loop com verificação de tipo
+# O QUE FAZ: percorre cada linha verificando se é texto antes de aplicar findall()
+# SINTAXE: for texto in df['coluna'] com isinstance()
+# A função isinstance(texto, str) verifica se o valor é string antes de aplicar o regex, /  
+# evitando o erro com valores float/NaN.
+#COMPLETAR COM isinstance 
+resultados = [] 
+
+for texto in df['ds_fatos']:    
+    if isinstance (texto, str):         
+        matches = padrao_emprestimo_consignado.findall(texto)        
+        if len(matches) > 0:            
+            resultados.append(True)        
+        else:            
+            resultados.append(False)    
+    else:       
+        resultados.append(False)</code></pre>
+
+        <pre><code># FUNÇÃO: df['nova_coluna'] = lista
+# O QUE FAZ: cria nova coluna no DataFrame com os valores da lista
+# SINTAXE: df['nome_coluna'] = lista_valores
+# FUNÇÃO: sum()
+# O QUE FAZ: soma todos os valores True da coluna (conta quantos são True)
+# SINTAXE: sum(df['coluna_booleana'])
+#COMPLETAR
+df['eh_emprestimo_consignado'] = resultados
+df['eh_emprestimo_consignado'].sum()</code></pre>
+
+        <pre><code># FUNÇÃO: df['coluna'].value_counts()
+# O QUE FAZ: conta frequência absoluta de cada valor único na coluna
+# SINTAXE: df['coluna'].value_counts() 
+df['eh_emprestimo_consignado'].value_counts()</code></pre>
+
+        <h3>Será que classificamos corretamente?</h3>
+
+        <pre><code>registros_consignado = df[df['eh_emprestimo_consignado'] == True]   
+
+for indice, texto in enumerate(registros_consignado['ds_fatos'][:20]):    
+    print(f"valor único {indice + 1}")    
+    print(textwrap.fill(str(texto), width=80))    
+    print("-" * 80)</code></pre>
+
+        <h2 id="validacao">6. VALIDAÇÃO DO MODELO ✅</h2>
+
+        <div class="gif-intro">
+            <img src="https://media.giphy.com/media/3o7qDEq2bMbcbPRQ2c/giphy.gif" alt="Gato aprovando" />
+        </div>
+
+        <h3>4.1. Estatísticas gerais do dataset</h3>
+
+        <div class="highlight">
+            <strong>Estatísticas gerais do dataset</strong>
+        </div>
+
+        <pre><code># FUNÇÃO: sum() e len()
+# O QUE FAZ: calcula totais e percentuais
+# SINTAXE: sum(coluna) / len(df) 
+total_processos = len(df)
+processos_consignado = sum(df['eh_emprestimo_consignado'])
+percentual = (processos_consignado / total_processos) * 100 
+
+print(f"=== ESTATÍSTICAS GERAIS ===")
+print(f"Total de processos: {total_processos}")
+print(f"Processos de crédito consignado: {processos_consignado}")
+print(f"Percentual: {percentual:.1f}%")</code></pre>
+
+        <h3>4.2. VALIDAÇÃO POR PALAVRAS-CHAVE ESPECÍFICAS</h3>
+
+        <pre><code># Casos que DEVEM ser pegos (teste de recall)</code></pre>
+
+        <div class="highlight">
+            <strong>Calcular percentual de textos óbvios capturados pelo regex</strong>
+        </div>
+
+        <pre><code># FUNÇÃO: df[df['coluna'].str.contains()]
+# O QUE FAZ: filtra textos que contêm 'empréstimo consignado' literalmente
+# SINTAXE: df[df['coluna'].str.contains('termo', na=False)] 
+textos_obvios = df[df['ds_fatos'].str.contains('empréstimo consignado', na=False)] 
+
+# FUNÇÃO: sum()
+# O QUE FAZ: conta quantos textos óbvios o regex identificou como True
+# SINTAXE: sum(coluna_booleana) 
+capturados = sum(textos_obvios['eh_emprestimo_consignado']) 
+
+# Percentual de textos óbvios que foram capturados
+percentual_capturados = (capturados / len(textos_obvios)) * 100 
+
+print(f"Total de textos óbvios: {len(textos_obvios)}")
+print(f"Capturados pelo regex: {capturados}")
+print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
+
+        <div class="gif-intro">
+            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Gato celebrando" />
+            <p><em>🎉 Parabéns! Você concluiu a análise com expressões regulares!</em></p>
+        </div>
+
+        <blockquote>
+            <h3>🚨 Próximos Passos</h3>
+            <ol>
+                <li><strong>Refinamento:</strong> Melhorar os padrões regex baseado nos resultados</li>
+                <li><strong>Expansão:</strong> Aplicar técnicas similares para extração de valores</li>
+                <li><strong>Integração:</strong> Preparar dados para análises com LLMs</li>
+                <li><strong>Validação:</strong> Testar com amostras maiores</li>
+            </ol>
+        </blockquote>
+
+        <h2>🎯 CONCLUSÃO</h2>
+        <p>As expressões regulares são fundamentais para a primeira etapa de análise de textos jurídicos, permitindo:</p>
+        <ul>
+            <li><strong>Identificação automatizada</strong> de tipos de processo</li>
+            <li><strong>Extração estruturada</strong> de informações quantitativas</li>
+            <li><strong>Classificação inicial</strong> para direcionamento de casos</li>
+            <li><strong>Preparação de dados</strong> para análises mais sofisticadas com LLMs</li>
+        </ul>
+
+        <p><em>O próximo passo será aplicar essas técnicas ao dataset completo e refinar os padrões com base nos resultados obtidos.</em></p>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+            <p><strong>🎉 Fim da aula!</strong></p>
+        </div>
+    </div>
+</body>
+</html>
