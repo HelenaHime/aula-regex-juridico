@@ -122,22 +122,31 @@
             background: #f8f9fa;
             font-style: italic;
         }
+        .gif-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .gif-section img {
+            max-width: 200px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Material Didático: Expressões Regulares para Análise de Processos Jurídicos</h1>
+        <h1>📚 Material Didático: Expressões Regulares para Análise de Processos Jurídicos</h1>
         
         <div class="highlight">
-            <strong>Objetivo da Aula:</strong> Desenvolver competências práticas em expressões regulares para extrair informações específicas de textos jurídicos, aplicando-as ao desafio de identificar processos sobre crédito consignado e valores de indenização.
+            <strong>🎯 Objetivo da Aula:</strong> Desenvolver competências práticas em expressões regulares para extrair informações específicas de textos jurídicos, aplicando-as ao desafio de identificar processos sobre crédito consignado e valores de indenização.
         </div>
 
-        <div style="text-align: center; margin: 20px 0;">
-            <p><em>Vamos começar nossa jornada pelo mundo das expressões regulares!</em></p>
+        <div class="gif-section">
+            <img src="https://i.imgur.com/JIX9t2j.gif" alt="Gato estudioso" />
+            <p><em>Vamos começar nossa jornada pelo mundo das expressões regulares! 🚀</em></p>
         </div>
 
         <div class="toc">
-            <h3>Sumário</h3>
+            <h3>📋 Sumário</h3>
             <ul>
                 <li><a href="#setup">0. Setup Inicial</a></li>
                 <li><a href="#estrutura">1. Estrutura do Dataset</a></li>
@@ -149,7 +158,11 @@
             </ul>
         </div>
 
-        <h2 id="setup">0. SETUP INICIAL</h2>
+        <h2 id="setup">0. SETUP INICIAL 🔧</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/13HgwGsXF0aiGY.gif" alt="Gato programando" />
+        </div>
 
         <pre><code>pip install pandas</code></pre>
 
@@ -157,7 +170,11 @@
 import re
 import numpy as np</code></pre>
 
-        <h2 id="estrutura">1. ESTRUTURA DO DATASET</h2>
+        <h2 id="estrutura">1. ESTRUTURA DO DATASET 📊</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/BmmfETghGOPrW.gif" alt="Gato analisando dados" />
+        </div>
 
         <h3>1.1 Estrutura do dataset</h3>
         <p>Nosso dataset (<code>dataset_clinica20252.csv</code>) contém <strong>19.800 observações</strong> com as seguintes colunas:</p>
@@ -204,12 +221,20 @@ import numpy as np</code></pre>
             </tbody>
         </table>
 
-        <h2 id="importacao">2. IMPORTAÇÃO DOS DADOS</h2>
+        <h2 id="importacao">2. IMPORTAÇÃO DOS DADOS 📂</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/L8K62iTDkzGX6.gif" alt="Gato carregando dados" />
+        </div>
 
         <pre><code># Importação do dataset
 df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')</code></pre>
 
-        <h2 id="verificacao">3. VERIFICAÇÃO PÓS-IMPORTAÇÃO</h2>
+        <h2 id="verificacao">3. VERIFICAÇÃO PÓS-IMPORTAÇÃO ✅</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/mlvseq9yvZhba.gif" alt="Gato investigando" />
+        </div>
 
         <h3>Verificação pós importação</h3>
 
@@ -237,7 +262,11 @@ list(df.columns)</code></pre>
 #df.dropna().shape[0]
 df.dropna().shape[0]</code></pre>
 
-        <h2 id="limpeza">4. NORMALIZAÇÃO E LIMPEZA DOS DADOS</h2>
+        <h2 id="limpeza">4. NORMALIZAÇÃO E LIMPEZA DOS DADOS 🧹</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/JIX9t2j.gif" alt="Gato limpando dados" />
+        </div>
 
         <pre><code># FUNÇÃO: df.head()
 # O QUE FAZ: mostra as primeiras 5 linhas do DataFrame
@@ -252,7 +281,7 @@ problemas_encoding = df['ds_fatos'].str.contains('Ãª|Ã©|Ã¡|Ã³|Ã­|Ãº|
 problemas_encoding.sum()</code></pre>
 
         <div class="highlight">
-            <strong>Configurar pandas para quebrar texto automaticamente</strong>
+            <strong>💡 Configurar pandas para quebrar texto automaticamente</strong>
         </div>
 
         <pre><code># FUNÇÃO: pd.set_option()
@@ -304,7 +333,11 @@ df['ds_Pedidos'] = df['ds_Pedidos'].str.replace('', '') </code></pre>
 df['ds_fatos'] = df['ds_fatos'].str.replace(r'\s+', ' ', regex=True)
 df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)</code></pre>
 
-        <h2 id="regex">5. EXPRESSÕES REGULARES APLICADAS</h2>
+        <h2 id="regex">5. EXPRESSÕES REGULARES APLICADAS 🎯</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/VbnUQpnihPSIgIXuZv.gif" alt="Gato hackeando" />
+        </div>
 
         <h3>Como filtrar processos sobre empréstimo consignado</h3>
 
@@ -387,7 +420,11 @@ for indice, texto in enumerate(registros_consignado['ds_fatos'][:20]):
     print(textwrap.fill(str(texto), width=80))    
     print("-" * 80)</code></pre>
 
-        <h2 id="validacao">6. VALIDAÇÃO DO MODELO</h2>
+        <h2 id="validacao">6. VALIDAÇÃO DO MODELO ✅</h2>
+
+        <div class="gif-section">
+            <img src="https://i.imgur.com/3o7qDEq2bMbcbPRQ2c.gif" alt="Gato aprovando" />
+        </div>
 
         <h3>4.1. Estatísticas gerais do dataset</h3>
 
@@ -432,8 +469,13 @@ print(f"Total de textos óbvios: {len(textos_obvios)}")
 print(f"Capturados pelo regex: {capturados}")
 print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
 
+        <div class="gif-section">
+            <img src="https://i.imgur.com/ICOgUNjpvO0PC.gif" alt="Gato celebrando" />
+            <p><em>🎉 Parabéns! Você concluiu a análise com expressões regulares!</em></p>
+        </div>
+
         <blockquote>
-            <h3>Próximos Passos</h3>
+            <h3>🚨 Próximos Passos</h3>
             <ol>
                 <li><strong>Refinamento:</strong> Melhorar os padrões regex baseado nos resultados</li>
                 <li><strong>Expansão:</strong> Aplicar técnicas similares para extração de valores</li>
@@ -442,7 +484,7 @@ print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
             </ol>
         </blockquote>
 
-        <h2>CONCLUSÃO</h2>
+        <h2>🎯 CONCLUSÃO</h2>
         <p>As expressões regulares são fundamentais para a primeira etapa de análise de textos jurídicos, permitindo:</p>
         <ul>
             <li><strong>Identificação automatizada</strong> de tipos de processo</li>
@@ -454,7 +496,7 @@ print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
         <p><em>O próximo passo será aplicar essas técnicas ao dataset completo e refinar os padrões com base nos resultados obtidos.</em></p>
 
         <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
-            <p><strong>Fim da aula!</strong></p>
+            <p><strong>🎉 Fim da aula!</strong></p>
         </div>
     </div>
 </body>
