@@ -112,8 +112,10 @@
         .toc a:hover {
             text-decoration: underline;
         }
-        .emoji {
-            font-size: 1.2em;
+        .emoji-section {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 3em;
         }
         blockquote {
             border-left: 4px solid #3498db;
@@ -121,14 +123,6 @@
             padding: 10px 20px;
             background: #f8f9fa;
             font-style: italic;
-        }
-        .gif-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .gif-section img {
-            max-width: 200px;
-            border-radius: 8px;
         }
     </style>
 </head>
@@ -140,9 +134,9 @@
             <strong>🎯 Objetivo da Aula:</strong> Desenvolver competências práticas em expressões regulares para extrair informações específicas de textos jurídicos, aplicando-as ao desafio de identificar processos sobre crédito consignado e valores de indenização.
         </div>
 
-        <div class="gif-section">
-            <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif?raw=true" alt="Programador" />
-            <p><em>Vamos começar nossa jornada pelo mundo das expressões regulares!</em></p>
+        <div class="emoji-section">
+            🐱‍💻
+            <p style="font-size: 0.5em; margin-top: 10px;"><em>Vamos começar nossa jornada pelo mundo das expressões regulares! 🚀</em></p>
         </div>
 
         <div class="toc">
@@ -160,8 +154,8 @@
 
         <h2 id="setup">0. SETUP INICIAL 🔧</h2>
 
-        <div class="gif-section">
-            <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Hi.gif?raw=true" alt="Setup" />
+        <div class="emoji-section">
+            ⚙️
         </div>
 
         <pre><code>pip install pandas</code></pre>
@@ -172,8 +166,8 @@ import numpy as np</code></pre>
 
         <h2 id="estrutura">1. ESTRUTURA DO DATASET 📊</h2>
 
-        <div class="gif-section">
-            <img src="https://raw.githubusercontent.com/abhisheknaiidu/abhisheknaiidu/master/code.gif" alt="Dados" />
+        <div class="emoji-section">
+            📈
         </div>
 
         <h3>1.1 Estrutura do dataset</h3>
@@ -223,8 +217,8 @@ import numpy as np</code></pre>
 
         <h2 id="importacao">2. IMPORTAÇÃO DOS DADOS 📂</h2>
 
-        <div class="gif-section">
-            <img src="https://camo.githubusercontent.com/71b837eeafdb135cd5e2dd0a746bd2ccb7cee85a7ad74ec23dbc6c8fae8e8f6d/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f33466644354c6153634b374f677650374b7a2f67697068792e676966" alt="Pasta" />
+        <div class="emoji-section">
+            📁
         </div>
 
         <pre><code># Importação do dataset
@@ -232,8 +226,8 @@ df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')</c
 
         <h2 id="verificacao">3. VERIFICAÇÃO PÓS-IMPORTAÇÃO ✅</h2>
 
-        <div class="gif-section">
-            <img src="https://i.imgur.com/mlvseq9yvZhba.gif" alt="Gato investigando" />
+        <div class="emoji-section">
+            🔍
         </div>
 
         <h3>Verificação pós importação</h3>
@@ -264,8 +258,8 @@ df.dropna().shape[0]</code></pre>
 
         <h2 id="limpeza">4. NORMALIZAÇÃO E LIMPEZA DOS DADOS 🧹</h2>
 
-        <div class="gif-section">
-            <img src="https://i.imgur.com/JIX9t2j.gif" alt="Gato limpando dados" />
+        <div class="emoji-section">
+            🧽
         </div>
 
         <pre><code># FUNÇÃO: df.head()
@@ -335,11 +329,11 @@ df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)</code><
 
         <h2 id="regex">5. EXPRESSÕES REGULARES APLICADAS 🎯</h2>
 
-        <div class="gif-section">
-            <img src="https://i.imgur.com/VbnUQpnihPSIgIXuZv.gif" alt="Gato hackeando" />
+        <div class="emoji-section">
+            🎪
         </div>
 
-        <h3>Como filtrar processos sobre empréstimo consignado</h3>
+        <h3>Como filtrar processos sobre crédito consignado</h3>
 
         <div class="highlight">
             <strong>Ver valores únicos como output direto</strong>
@@ -422,8 +416,8 @@ for indice, texto in enumerate(registros_consignado['ds_fatos'][:20]):
 
         <h2 id="validacao">6. VALIDAÇÃO DO MODELO ✅</h2>
 
-        <div class="gif-section">
-            <img src="https://i.imgur.com/3o7qDEq2bMbcbPRQ2c.gif" alt="Gato aprovando" />
+        <div class="emoji-section">
+            🎉
         </div>
 
         <h3>4.1. Estatísticas gerais do dataset</h3>
@@ -469,9 +463,9 @@ print(f"Total de textos óbvios: {len(textos_obvios)}")
 print(f"Capturados pelo regex: {capturados}")
 print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
 
-        <div class="gif-section">
-            <img src="https://i.imgur.com/ICOgUNjpvO0PC.gif" alt="Gato celebrando" />
-            <p><em>🎉 Parabéns! Você concluiu a análise com expressões regulares!</em></p>
+        <div class="emoji-section">
+            🏆
+            <p style="font-size: 0.4em; margin-top: 10px;"><em>Parabéns! Você concluiu a análise com expressões regulares!</em></p>
         </div>
 
         <blockquote>
