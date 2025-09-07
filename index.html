@@ -104,6 +104,18 @@
             text-align: center;
             margin: 25px 0;
             font-size: 3em;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
         blockquote {
             border-left: 4px solid #3498db;
@@ -111,14 +123,6 @@
             padding: 10px 20px;
             background: #f8f9fa;
             font-style: italic;
-        }
-        .gif-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .cat-gif {
-            max-width: 200px;
-            border-radius: 8px;
         }
         .step-number {
             background: #3498db;
@@ -156,7 +160,6 @@
                 <li><a href="#limpeza">4. Normalização e Limpeza dos Dados</a></li>
                 <li><a href="#regex">5. Expressões Regulares Aplicadas</a></li>
                 <li><a href="#validacao">6. Validação do Modelo</a></li>
-                <li><a href="#casos-duvida">7. Preparação para LLM</a></li>
             </ul>
         </div>
 
@@ -166,22 +169,20 @@
             ⚙️
         </div>
 
-        <p>Antes de começarmos, vamos instalar e importar as bibliotecas necessárias:</p>
-
         <pre><code>pip install pandas</code></pre>
 
         <pre><code>import pandas as pd
 import re
-import numpy as np
-import textwrap</code></pre>
+import numpy as np</code></pre>
 
         <h2 id="estrutura"><span class="step-number">1</span>ESTRUTURA DO DATASET 📊</h2>
 
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat analyzing data" class="cat-gif">
+        <div class="emoji-section">
+            📊🔍
+            <p style="font-size: 0.4em; margin-top: 10px;"><em>Analisando a estrutura dos dados...</em></p>
         </div>
 
-        <h3>1.1 Compreendendo nosso dataset</h3>
+        <h3>1.1 Estrutura do dataset</h3>
         <p>Nosso dataset (<code>dataset_clinica20252.csv</code>) contém <strong>19.800 observações</strong> com as seguintes colunas:</p>
 
         <table>
@@ -232,15 +233,14 @@ import textwrap</code></pre>
             📁
         </div>
 
-        <p>Agora vamos importar nosso dataset. Note o uso do delimitador "|" que é específico deste arquivo:</p>
-
         <pre><code># Importação do dataset
 df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')</code></pre>
 
         <h2 id="verificacao"><span class="step-number">3</span>VERIFICAÇÃO PÓS-IMPORTAÇÃO ✅</h2>
 
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Cat checking data" class="cat-gif">
+        <div class="emoji-section">
+            🔍✅
+            <p style="font-size: 0.4em; margin-top: 10px;"><em>Verificando a integridade dos dados...</em></p>
         </div>
 
         <h3>Verificação pós importação</h3>
@@ -274,14 +274,10 @@ df.dropna().shape[0]</code></pre>
             🧽
         </div>
 
-        <h3>4.1 Explorando a estrutura dos dados</h3>
-
         <pre><code># FUNÇÃO: df.head()
 # O QUE FAZ: mostra as primeiras 5 linhas do DataFrame
 # SINTAXE: df.head(numero_de_linhas)
 df.head(3)</code></pre>
-
-        <h3>4.2 Identificando problemas de encoding</h3>
 
         <pre><code># FUNÇÃO: df['coluna'].str.contains()
 # O QUE FAZ: busca por padrões específicos dentro de uma coluna de texto
@@ -298,10 +294,9 @@ problemas_encoding.sum()</code></pre>
 # O QUE FAZ: define largura máxima antes de quebrar o texto
 # SINTAXE: pd.set_option('display.width', valor) 
 pd.set_option('display.width', 80)
-pd.set_option('display.max_colwidth', 80)
-print(df[problemas_encoding]['ds_fatos'])</code></pre>
+pd.set_option('display.max_colwidth', 80)</code></pre>
 
-        <h3>4.3 Função para ver o inteiro teor da célula</h3>
+        <h3>Função para ver o inteiro teor da célula</h3>
 
         <pre><code>import textwrap 
 
@@ -310,7 +305,7 @@ for indice, texto in df[problemas_encoding]['ds_fatos'].head(5).items():
     print(textwrap.fill(texto, width=80))    
     print("-" * 80)</code></pre>
 
-        <h3>4.4 Verificar problemas com espaçamento</h3>
+        <h3>Verificar problemas com espaçamento</h3>
 
         <pre><code>problemas_espaco = df['ds_fatos'].str.contains('  +', na=False)  
 problemas_espaco.sum()</code></pre>
@@ -320,12 +315,10 @@ problemas_espaco.sum()</code></pre>
     print(textwrap.fill(texto, width=80))    
     print("-" * 80)</code></pre>
 
-        <h3>4.5 Verificar caracteres corrompidos</h3>
-
         <pre><code>caracteres_corrompidos = df['ds_fatos'].str.contains('', na=False)
 caracteres_corrompidos.sum()</code></pre>
 
-        <h3>4.6 Limpar espaçamento duplo e símbolos corrompidos</h3>
+        <h3>Limpar espaçamento duplo e símbolo</h3>
 
         <pre><code># FUNÇÃO: df['coluna'].str.replace()
 # O QUE FAZ: substitui caracteres específicos por outros
@@ -344,11 +337,12 @@ df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)</code><
 
         <h2 id="regex"><span class="step-number">5</span>EXPRESSÕES REGULARES APLICADAS 🎯</h2>
 
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/Dh5q0sShxgp13DwrvG/giphy.gif" alt="Cat coding" class="cat-gif">
+        <div class="emoji-section">
+            🎯📝
+            <p style="font-size: 0.4em; margin-top: 10px;"><em>Aplicando expressões regulares...</em></p>
         </div>
 
-        <h3>5.1 Como filtrar processos sobre crédito consignado</h3>
+        <h3>Como filtrar processos sobre crédito consignado</h3>
 
         <div class="highlight">
             <strong>Ver valores únicos como output direto</strong>
@@ -362,12 +356,10 @@ valores_unicos_fatos = df['ds_fatos'].unique()
 # Para ver o output, simplesmente chame a variável:
 valores_unicos_fatos[:10]  # apenas os 10 primeiros</code></pre>
 
-        <pre><code>for indice, texto in enumerate(valores_unicos_fatos[:20]):    
-    print(f"Valor único {indice + 1}")    
+        <pre><code>for indice, texto in enumerate(valores_unicos_fatos[:1000]):    
+    print(f"valor único {indice + 1}")    
     print(textwrap.fill(str(texto), width=80))    
     print("-" * 80)</code></pre>
-
-        <h3>5.2 Criando o padrão regex para empréstimo consignado</h3>
 
         <pre><code># FUNÇÃO: re.compile()
 # O QUE FAZ: cria padrão que busca empréstimo E consignado no mesmo texto
@@ -375,8 +367,6 @@ valores_unicos_fatos[:10]  # apenas os 10 primeiros</code></pre>
 # COMPLETAR: 
 padrao_emprestimo_consignado = re.compile(r'empréstimo\sconsignado|empréstimo\spor\sconsignação|' \
                                           r'empréstimos\sconsignados|contrato\sde\sconsignação')</code></pre>
-
-        <h3>5.3 Primeira tentativa de aplicar o regex</h3>
 
         <pre><code># COMPLETAR: 
 resultados = [] 
@@ -388,11 +378,7 @@ for texto in df['ds_fatos']:
     else:        
         resultados.append(False)</code></pre>
 
-        <h3>5.4 Como resolvemos o erro acima?</h3>
-
-        <div class="highlight">
-            <strong>⚠️ Problema:</strong> O código acima pode dar erro se houver valores NaN ou não-string na coluna.
-        </div>
+        <h3>Como resolvemos o erro acima?</h3>
 
         <pre><code># FUNÇÃO: for loop com verificação de tipo
 # O QUE FAZ: percorre cada linha verificando se é texto antes de aplicar findall()
@@ -413,8 +399,6 @@ for texto in df['ds_fatos']:
     else:       
         resultados.append(False)</code></pre>
 
-        <h3>5.5 Criando a coluna de classificação</h3>
-
         <pre><code># FUNÇÃO: df['nova_coluna'] = lista
 # O QUE FAZ: cria nova coluna no DataFrame com os valores da lista
 # SINTAXE: df['nome_coluna'] = lista_valores
@@ -430,19 +414,20 @@ df['eh_emprestimo_consignado'].sum()</code></pre>
 # SINTAXE: df['coluna'].value_counts() 
 df['eh_emprestimo_consignado'].value_counts()</code></pre>
 
-        <h3>5.6 Será que classificamos corretamente?</h3>
+        <h3>Será que classificamos corretamente?</h3>
 
         <pre><code>registros_consignado = df[df['eh_emprestimo_consignado'] == True]   
 
 for indice, texto in enumerate(registros_consignado['ds_fatos'][:20]):    
-    print(f"Registro {indice + 1}")    
+    print(f"valor único {indice + 1}")    
     print(textwrap.fill(str(texto), width=80))    
     print("-" * 80)</code></pre>
 
         <h2 id="validacao"><span class="step-number">6</span>VALIDAÇÃO DO MODELO ✅</h2>
 
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/l2Sq29cFXoF80ADlK/giphy.gif" alt="Cat celebrating" class="cat-gif">
+        <div class="emoji-section">
+            🎉✅
+            <p style="font-size: 0.4em; margin-top: 10px;"><em>Validando nosso modelo...</em></p>
         </div>
 
         <h3>6.1 Estatísticas gerais do dataset</h3>
@@ -488,57 +473,6 @@ print(f"Total de textos óbvios: {len(textos_obvios)}")
 print(f"Capturados pelo regex: {capturados}")
 print(f"Percentual capturado: {percentual_capturados:.1f}%")</code></pre>
 
-        <h2 id="casos-duvida"><span class="step-number">7</span>PREPARAÇÃO PARA LLM 🤖</h2>
-
-        <div class="ascii-art">
-╭─────────────────────────────────╮
-│  🤖 Conectando com IA...         │
-│  ┌─────┐                        │
-│  │ LLM │ ← casos ambíguos        │
-│  └─────┘                        │
-│  🎯 Análise contextual avançada  │
-╰─────────────────────────────────╯
-        </div>
-
-        <h3>7.1 Identificando casos ambíguos</h3>
-
-        <p>Após aplicar nossas expressões regulares, alguns casos podem permanecer ambíguos ou difíceis de classificar. Estes são os candidatos ideais para análise por LLM:</p>
-
-        <pre><code># Casos que contêm palavras relacionadas mas não foram capturados pelo regex
-casos_ambiguos = df[
-    (~df['eh_emprestimo_consignado']) & 
-    (df['ds_fatos'].str.contains('consignado|empréstimo|financiamento', na=False, case=False))
-]
-
-print(f"Casos ambíguos encontrados: {len(casos_ambiguos)}")
-
-# Examinar alguns casos ambíguos
-for indice, texto in enumerate(casos_ambiguos['ds_fatos'][:10]):
-    print(f"Caso ambíguo {indice + 1}:")
-    print(textwrap.fill(str(texto), width=80))
-    print("-" * 80)</code></pre>
-
-        <h3>7.2 Critérios para envio ao LLM</h3>
-
-        <div class="highlight">
-            <strong>🎯 Quando usar LLM:</strong>
-            <ul>
-                <li>Textos com termos relacionados mas não capturados pelo regex</li>
-                <li>Linguagem ambígua ou muito técnica</li>
-                <li>Casos onde o contexto é fundamental para a classificação</li>
-                <li>Variações linguísticas não previstas no regex</li>
-            </ul>
-        </div>
-
-        <pre><code># Preparar dados para análise LLM
-casos_para_llm = casos_ambiguos[['cd_causa', 'ds_fatos', 'ds_Pedidos']].copy()
-casos_para_llm['fonte'] = 'regex_ambiguo'
-
-print(f"Casos preparados para análise LLM: {len(casos_para_llm)}")
-
-# Salvar casos para análise posterior
-casos_para_llm.to_csv('casos_para_llm_analise.csv', index=False, encoding='utf-8')</code></pre>
-
         <div class="emoji-section">
             🏆
             <p style="font-size: 0.4em; margin-top: 10px;"><em>Parabéns! Você concluiu a análise com expressões regulares!</em></p>
@@ -549,38 +483,24 @@ casos_para_llm.to_csv('casos_para_llm_analise.csv', index=False, encoding='utf-8
             <ol>
                 <li><strong>Refinamento:</strong> Melhorar os padrões regex baseado nos resultados</li>
                 <li><strong>Expansão:</strong> Aplicar técnicas similares para extração de valores</li>
-                <li><strong>Integração:</strong> Analisar casos ambíguos com LLMs</li>
+                <li><strong>Integração:</strong> Preparar dados para análises com LLMs</li>
                 <li><strong>Validação:</strong> Testar com amostras maiores</li>
-                <li><strong>Automação:</strong> Criar pipeline completo regex → LLM → classificação final</li>
             </ol>
         </blockquote>
 
         <h2>🎯 CONCLUSÃO</h2>
-        
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Success cat" class="cat-gif">
-        </div>
-
         <p>As expressões regulares são fundamentais para a primeira etapa de análise de textos jurídicos, permitindo:</p>
         <ul>
             <li><strong>Identificação automatizada</strong> de tipos de processo</li>
             <li><strong>Extração estruturada</strong> de informações quantitativas</li>
             <li><strong>Classificação inicial</strong> para direcionamento de casos</li>
             <li><strong>Preparação de dados</strong> para análises mais sofisticadas com LLMs</li>
-            <li><strong>Filtragem eficiente</strong> de grandes volumes de dados textuais</li>
         </ul>
 
-        <div class="highlight">
-            <strong>💡 Lição Aprendida:</strong> Expressões regulares são excelentes para padrões bem definidos, mas a combinação com LLMs permite capturar nuances e contextos mais complexos que o regex sozinho não consegue identificar.
-        </div>
-
-        <p><em>O próximo passo será aplicar essas técnicas ao dataset completo, refinar os padrões com base nos resultados obtidos, e integrar a análise por LLM para os casos ambíguos.</em></p>
+        <p><em>O próximo passo será aplicar essas técnicas ao dataset completo e refinar os padrões com base nos resultados obtidos.</em></p>
 
         <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
             <p><strong>🎉 Fim da aula!</strong></p>
-            <p style="font-size: 0.9em; color: #666;">
-                <em>Material desenvolvido para o curso de Análise de Processos Jurídicos com IA</em>
-            </p>
         </div>
     </div>
 </body>
