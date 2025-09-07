@@ -15,26 +15,31 @@
             background-color: #ffffff;
         }
         
-        h1, h2, h3 {
-            border-bottom: 1px solid #d1d9e0;
-            padding-bottom: 10px;
-        }
-        
         h1 {
             font-size: 2em;
             margin-bottom: 20px;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 10px;
         }
         
         h2 {
             font-size: 1.5em;
             margin-top: 30px;
             margin-bottom: 15px;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 10px;
         }
         
         h3 {
             font-size: 1.25em;
             margin-top: 25px;
             margin-bottom: 10px;
+        }
+        
+        h4 {
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 8px;
         }
         
         .code-block {
@@ -45,8 +50,9 @@
             margin: 16px 0;
             overflow-x: auto;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.45;
+            white-space: pre-wrap;
         }
         
         .output {
@@ -105,6 +111,14 @@
         .emoji {
             font-size: 1.2em;
         }
+        
+        p, ul, ol {
+            margin: 10px 0;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -115,24 +129,19 @@
     <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat coding">
 </div>
 
-## 1. 📥 IMPORTAÇÃO E COMPREENSÃO DOS DADOS
+<h2>1. 📥 IMPORTAÇÃO E COMPREENSÃO DOS DADOS</h2>
 
-<div class="code-block">
-pip install pandas
-</div>
+<div class="code-block">pip install pandas</div>
 
-<div class="output">
-Requirement already satisfied: pandas in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (2.3.1)
+<div class="output">Requirement already satisfied: pandas in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (2.3.1)
 Requirement already satisfied: numpy>=1.23.2 in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (from pandas) (2.3.2)
 Requirement already satisfied: python-dateutil>=2.8.2 in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (from pandas) (2.9.0.post0)
 Requirement already satisfied: pytz>=2020.1 in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (from pandas) (2025.2)
 Requirement already satisfied: tzdata>=2022.7 in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (from pandas) (2025.2)
 Requirement already satisfied: six>=1.5 in c:\users\funar\appdata\local\packages\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\localcache\local-packages\python311\site-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)
-Note: you may need to restart the kernel to use updated packages.
-</div>
+Note: you may need to restart the kernel to use updated packages.</div>
 
-<div class="code-block">
-import pandas as pd
+<div class="code-block">import pandas as pd
 import re
 import numpy as np
 import re
@@ -146,9 +155,9 @@ except Exception as e:
 
 <div class="output">✅ re.compile() está funcionando!</div>
 
-### 1.1 📋 Estrutura do dataset
+<h3>1.1 📋 Estrutura do dataset</h3>
 
-Nosso dataset (**dataset_clinica20252.csv**) contém **19.800** observações com as seguintes colunas:
+<p>Nosso dataset (<strong>dataset_clinica20252.csv</strong>) contém <strong>19.800</strong> observações com as seguintes colunas:</p>
 
 <table>
 <tr><th>Campo</th><th>Descrição</th><th>Características</th></tr>
@@ -160,29 +169,23 @@ Nosso dataset (**dataset_clinica20252.csv**) contém **19.800** observações co
 <tr><td>ds_Qualificacao</td><td>Qualificação das partes</td><td>Dados das partes envolvidas</td></tr>
 </table>
 
-<div class="code-block">
-# Importação do dataset
-df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')
-</div>
+<div class="code-block"># Importação do dataset
+df = pd.read_csv('dataset_clinica20252.csv', delimiter='|', encoding='utf-8')</div>
 
-### 🔍 Verificação pós importação
+<h3>🔍 Verificação pós importação</h3>
 
-<div class="code-block">
-# FUNÇÃO: len()
+<div class="code-block"># FUNÇÃO: len()
 # O QUE FAZ: conta o número de linhas (registros) no DataFrame
 # SINTAXE: len(dataframe)
-len(df)
-</div>
+len(df)</div>
 
 <div class="output">19800</div>
 
-<div class="code-block">
-# FUNÇÃO: list()
+<div class="code-block"># FUNÇÃO: list()
 # O QUE FAZ: converte o índice(nome da coluna) das colunas em uma lista que 
 # podemos ler facilmente
 # SINTAXE: list(df.columns)
-list(df.columns)
-</div>
+list(df.columns)</div>
 
 <div class="output">['cd_causa',
  'cd_atendimento',
@@ -191,10 +194,9 @@ list(df.columns)
  'ds_Pedidos',
  'ds_Qualificacao']</div>
 
-### 📊 Número de NAs
+<h3>📊 Número de NAs</h3>
 
-<div class="code-block">
-# FUNÇÃO: df.dropna()
+<div class="code-block"># FUNÇÃO: df.dropna()
 # O QUE FAZ: remove todas as linhas que têm pelo menos um valor vazio (NaN)
 # SINTAXE: df.dropna()
 
@@ -202,8 +204,7 @@ list(df.columns)
 # O QUE FAZ: retorna o número de linhas do DataFrame resultante
 # SINTAXE: dataframe.shape[0]
 
-df.dropna().shape[0]
-</div>
+df.dropna().shape[0]</div>
 
 <div class="output">19799</div>
 
@@ -211,48 +212,54 @@ df.dropna().shape[0]
     <img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Cat analyzing data">
 </div>
 
-## 2. 🧹 NORMALIZAÇÃO E LIMPEZA DOS DADOS
+<h2>2. 🧹 NORMALIZAÇÃO E LIMPEZA DOS DADOS</h2>
 
-<div class="code-block">
-# FUNÇÃO: df.head()
+<div class="code-block"># FUNÇÃO: df.head()
 # O QUE FAZ: mostra as primeiras 5 linhas do DataFrame
 # SINTAXE: df.head(numero_de_linhas)
-df.head(3)
-</div>
+df.head(3)</div>
 
-<div class="code-block">
-# FUNÇÃO: df['coluna'].str.contains()
+<div class="code-block"># FUNÇÃO: df['coluna'].str.contains()
 # O QUE FAZ: busca por padrões específicos dentro de uma coluna de texto
 # SINTAXE: df['coluna'].str.contains('padrão')
 problemas_encoding = df['ds_fatos'].str.contains('Ãª|Ã©|Ã¡|Ã³|Ã­|Ãº|Ã§|Ã£|©', 
                                                  na=False)
 
-problemas_encoding.sum()
-</div>
+problemas_encoding.sum()</div>
 
 <div class="output">9</div>
 
-### 🔍 Verificar problemas com espaçamento
+<div class="code-block">print(df[problemas_encoding]['ds_fatos'])</div>
 
-<div class="code-block">
-problemas_espaco = df['ds_fatos'].str.contains('  +', 
+<div class="code-block">import textwrap
+
+for indice, texto in df[problemas_encoding]['ds_fatos'].head(5).items():
+    print(f"Registro {indice}:")
+    print(textwrap.fill(texto, width=80))
+    print("-" * 80)</div>
+
+<h3>🔍 Verificar problemas com espaçamento</h3>
+
+<div class="code-block">problemas_espaco = df['ds_fatos'].str.contains('  +', 
                                                  na=False)
-problemas_espaco.sum()
-</div>
+problemas_espaco.sum()</div>
 
 <div class="output">0</div>
 
-<div class="code-block">
-caracteres_corrompidos = df['ds_fatos'].str.contains('–', na=False)
-caracteres_corrompidos.sum()
-</div>
+<div class="code-block">import textwrap
+for indice, texto in df[problemas_espaco]['ds_fatos'].head(5).items():
+    print(f"Registro {indice}:")
+    print(textwrap.fill(texto, width=80))
+    print("-" * 80)</div>
+
+<div class="code-block">caracteres_corrompidos = df['ds_fatos'].str.contains('–', na=False)
+caracteres_corrompidos.sum()</div>
 
 <div class="output">0</div>
 
-### 🧼 Limpar espacamento duplo e símbolo –
+<h3>🧼 Limpar espacamento duplo e símbolo –</h3>
 
-<div class="code-block">
-# FUNÇÃO: df['coluna'].str.replace()
+<div class="code-block"># FUNÇÃO: df['coluna'].str.replace()
 # O QUE FAZ: substitui caracteres específicos por outros
 # SINTAXE: df['coluna'].str.replace('caractere_antigo', 'caractere_novo')
 # COMPLETAR: caracteres específicos
@@ -265,40 +272,65 @@ df['ds_Pedidos'] = df['ds_Pedidos'].str.replace('–', '')
 # COMPLETAR: espacamento duplo
 # padrao_regex - string raw: r'\s+'
 df['ds_fatos'] = df['ds_fatos'].str.replace(r'\s+', ' ', regex=True)
-df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)
-</div>
+df['ds_Pedidos'] = df['ds_Pedidos'].str.replace(r'\s+', ' ', regex=True)</div>
 
 <div class="cat-gif">
     <img src="https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif" alt="Cat cleaning">
 </div>
 
-## 3. 🔍 EXPRESSÕES REGULARES APLICADAS
+<h2>3. 🔍 EXPRESSÕES REGULARES APLICADAS</h2>
 
-### 📝 Ver valores únicos como output direto
+<h3>📝 Ver valores únicos como output direto</h3>
 
-<div class="code-block">
-# FUNÇÃO: df['coluna'].unique()
+<div class="code-block"># FUNÇÃO: df['coluna'].unique()
 # O QUE FAZ: retorna array com todos os valores únicos da coluna
 # SINTAXE: df['coluna'].unique()
 valores_unicos_fatos = df['ds_fatos'].unique()
-</div>
+# Para ver o output, simplesmente chame a variável:
+valores_unicos_fatos</div>
 
-<div class="code-block">
-# FUNÇÃO: re.compile()
+<div class="code-block"># :10 apenas os 10 primeiros  
+for indice, texto in enumerate(valores_unicos_fatos[:1000]):
+    print(f"valor único {indice + 1}")
+    print(textwrap.fill(str(texto), width=80))
+    print("-" * 80)</div>
+
+<div class="code-block"># FUNÇÃO: re.compile()
 # O QUE FAZ: cria padrão que busca empréstimo E consignado no mesmo texto
 # SINTAXE: re.compile(r'padrão')
 
 # COMPLETAR:
 padrao_emprestimo_consignado = re.compile(r'empréstimo\sconsignado|empréstimo\spor\sconsignação|' \
-                                          r'empréstimos\sconsignados|contrato\sde\sconsignação')
-</div>
+                                          r'empréstimos\sconsignados|contrato\sde\sconsignação')</div>
 
-<div class="warning">
-<strong>⚠️ Importante:</strong> Como resolvemos o erro de TypeError com valores float/NaN?
-</div>
+<div class="code-block"># FUNÇÃO: for loop com findall()
+# O QUE FAZ: percorre cada linha aplicando findall() diretamente
+# SINTAXE: for texto in df['coluna']
 
-<div class="code-block">
-# FUNÇÃO: for loop com verificação de tipo
+# COMPLETAR: 
+resultados = []
+
+for texto in df['ds_fatos']:
+    matches = padrao_emprestimo_consignado.findall(texto)
+    if len(matches) > 0:
+        resultados.append(True)
+    else:
+        resultados.append(False)</div>
+
+<div class="output">---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[24], line 5
+      2 resultados = []
+      4 for texto in df['ds_fatos']:
+----> 5     matches = padrao_emprestimo_consignado.findall(texto)
+      6     if len(matches) > 0:
+      7         resultados.append(True)
+
+TypeError: expected string or bytes-like object, got 'float'</div>
+
+<p><strong>Como resolvemos o erro acima?</strong></p>
+
+<div class="code-block"># FUNÇÃO: for loop com verificação de tipo
 # O QUE FAZ: percorre cada linha verificando se é texto antes de aplicar findall()
 # SINTAXE: for texto in df['coluna'] com isinstance()
 # A função isinstance(texto, str) verifica se o valor é string antes de aplicar o regex, 
@@ -315,11 +347,9 @@ for texto in df['ds_fatos']:
         else:
             resultados.append(False)
     else:
-       resultados.append(False)
-</div>
+       resultados.append(False)</div>
 
-<div class="code-block">
-# FUNÇÃO: df['nova_coluna'] = lista
+<div class="code-block"># FUNÇÃO: df['nova_coluna'] = lista
 # O QUE FAZ: cria nova coluna no DataFrame com os valores da lista
 # SINTAXE: df['nome_coluna'] = lista_valores
 # FUNÇÃO: sum()
@@ -328,34 +358,39 @@ for texto in df['ds_fatos']:
 
 # COMPLETAR
 df['eh_emprestimo_consignado'] = resultados
-df['eh_emprestimo_consignado'].sum()
-</div>
+df['eh_emprestimo_consignado'].sum()</div>
 
 <div class="output">5937</div>
 
-<div class="code-block">
-# FUNÇÃO: df['coluna'].value_counts()
+<div class="code-block"># FUNÇÃO: df['coluna'].value_counts()
 # O QUE FAZ: conta frequência absoluta de cada valor único na coluna
 # SINTAXE: df['coluna'].value_counts()
 
-df['eh_emprestimo_consignado'].value_counts()
-</div>
+df['eh_emprestimo_consignado'].value_counts()</div>
 
 <div class="output">eh_emprestimo_consignado
 False    13863
 True      5937
 Name: count, dtype: int64</div>
 
+<p><strong>Será que classificamos corretamente?</strong></p>
+
+<div class="code-block">registros_consignado = df[df['eh_emprestimo_consignado'] == True]
+
+for indice, texto in enumerate(registros_consignado['ds_fatos'][:20]):
+    print(f"valor único {indice + 1}")
+    print(textwrap.fill(str(texto), width=80))
+    print("-" * 80)</div>
+
 <div class="cat-gif">
     <img src="https://media.giphy.com/media/BzyTuYCmvSORqs1ABM/giphy.gif" alt="Cat with magnifying glass">
 </div>
 
-## 4. ✅ VALIDAÇÃO DO MODELO
+<h2>4. ✅ VALIDAÇÃO DO MODELO</h2>
 
-### 4.1. 📊 Estatísticas gerais do dataset
+<h3>4.1. 📊 Estatísticas gerais do dataset</h3>
 
-<div class="code-block">
-# FUNÇÃO: sum() e len()
+<div class="code-block"># FUNÇÃO: sum() e len()
 # O QUE FAZ: calcula totais e percentuais
 # SINTAXE: sum(coluna) / len(df)
 
@@ -366,8 +401,7 @@ percentual = (processos_consignado / total_processos) * 100
 print(f"=== ESTATÍSTICAS GERAIS ===")
 print(f"Total de processos: {total_processos}")
 print(f"Processos de crédito consignado: {processos_consignado}")
-print(f"Percentual: {percentual:.1f}%")
-</div>
+print(f"Percentual: {percentual:.1f}%")</div>
 
 <div class="stats-box">
 <strong>=== ESTATÍSTICAS GERAIS ===</strong><br>
@@ -376,10 +410,9 @@ Processos de crédito consignado: 5937<br>
 Percentual: 30.0%
 </div>
 
-### 4.2. 🎯 VALIDAÇÃO POR PALAVRAS-CHAVE ESPECÍFICAS
+<h3>4.2. 🎯 VALIDAÇÃO POR PALAVRAS-CHAVE ESPECÍFICAS</h3>
 
-<div class="code-block">
-# Casos que DEVEM ser pegos (teste de recall)
+<div class="code-block"># Casos que DEVEM ser pegos (teste de recall)
 # Calcular percentual de textos óbvios capturados pelo regex
 
 # FUNÇÃO: df[df['coluna'].str.contains()]
@@ -399,8 +432,7 @@ percentual_capturados = (capturados / len(textos_obvios)) * 100
 
 print(f"Total de textos óbvios: {len(textos_obvios)}")
 print(f"Capturados pelo regex: {capturados}")
-print(f"Percentual capturado: {percentual_capturados:.1f}%")
-</div>
+print(f"Percentual capturado: {percentual_capturados:.1f}%")</div>
 
 <div class="stats-box">
 Total de textos óbvios: 4715<br>
@@ -408,25 +440,23 @@ Capturados pelo regex: 4715<br>
 <strong>Percentual capturado: 100.0%</strong> ✅
 </div>
 
-<div class="cat-gif">
-    <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Cat celebrating">
-</div>
+<h2>5. 🏛️ UMA DICA: olhem para o número do processo</h2>
 
-## 5. 🏛️ UMA DICA: olhem para o número do processo
+<h3>📋 ANÁLISE DO NÚMERO CNJ</h3>
 
-### 📋 ANÁLISE DO NÚMERO CNJ
+<p><strong>Extração de Tribunal e Ano do Processo usando RegExp</strong></p>
 
-**Extração de Tribunal e Ano do Processo usando RegExp**
+<h4>📋 O que vamos aprender:</h4>
+<ul>
+<li>Estrutura da numeração única CNJ</li>
+<li>Como extrair o tribunal usando regex</li>
+<li>Como extrair o ano do processo</li>
+<li>Aplicação prática no dataset</li>
+</ul>
 
-#### 📋 O que vamos aprender:
-- Estrutura da numeração única CNJ
-- Como extrair o tribunal usando regex
-- Como extrair o ano do processo
-- Aplicação prática no dataset
+<h4>🔍 Estrutura da Numeração CNJ</h4>
 
-#### 🔍 Estrutura da Numeração CNJ
-
-A numeração única CNJ segue o padrão: **NNNNNNN-DD.AAAA.J.TR.OOOO**
+<p>A numeração única CNJ segue o padrão: <strong>NNNNNNN-DD.AAAA.J.TR.OOOO</strong></p>
 
 <table>
 <tr><th>Campo</th><th>Descrição</th><th>Exemplo</th></tr>
@@ -438,20 +468,27 @@ A numeração única CNJ segue o padrão: **NNNNNNN-DD.AAAA.J.TR.OOOO**
 <tr><td>OOOO</td><td>Unidade de origem</td><td>0140</td></tr>
 </table>
 
-#### 📍 Códigos dos Segmentos (J):
-- 1: STF
-- 2: CNJ  
-- 3: STJ
-- 4: Justiça Federal
-- 5: Justiça do Trabalho
-- 6: Justiça Eleitoral
-- 7: Justiça Militar da União
-- **8: Justiça Estadual** ⭐
-- 9: Justiça Militar Estadual
+<h4>📍 Códigos dos Segmentos (J):</h4>
+<ul>
+<li>1: STF</li>
+<li>2: CNJ</li>
+<li>3: STJ</li>
+<li>4: Justiça Federal</li>
+<li>5: Justiça do Trabalho</li>
+<li>6: Justiça Eleitoral</li>
+<li>7: Justiça Militar da União</li>
+<li><strong>8: Justiça Estadual</strong> ⭐</li>
+<li>9: Justiça Militar Estadual</li>
+</ul>
 
-### 📅 Extraindo anos
+<div class="code-block">df['cd_atendimento'].dtype</div>
 
-<div class="code-block">
+<div class="output">dtype('O')</div>
+
+<h3>📅 Extraindo anos</h3>
+
+<div class="code-block"># Criar listas vazias para armazenar resultados
+
 # Criar padrão regex para capturar o ano
 padrao_ano = re.compile('\d{7}-\d{2}\.(\d{4})\.\d.\d{2}\.\d{4}')
 
@@ -470,13 +507,11 @@ for numero in df['cd_atendimento']:
         anos.append(None)
 
 df['ano'] = anos
-df.head(7)
-</div>
+df.head(7)</div>
 
-#### 🎯 ESTRUTURA DO NÚMERO CNJ:
+<h4>🎯 ESTRUTURA DO NÚMERO CNJ:</h4>
 
-<div class="code-block">
-# Exemplo visual da estrutura do número CNJ
+<div class="code-block"># Exemplo visual da estrutura do número CNJ
 numero = "0825789-84.2025.8.18.0140"
 
 print("🎯 ESTRUTURA DO NÚMERO CNJ:")
@@ -487,8 +522,7 @@ print("           ", "|" * 7, "|" * 2, "|" * 4, "|", "|" * 2, "|" * 4)
 print("           ", "Seq.   ", "DV", " ANO ", "J", "TR", "Origem")
 print()
 print("📅 Queremos capturar apenas o ANO: 2025")
-print("🏛️ E também o código do Tribunal: 18")
-</div>
+print("🏛️ E também o código do Tribunal: 18")</div>
 
 <div class="output">🎯 ESTRUTURA DO NÚMERO CNJ:
 
@@ -500,12 +534,11 @@ Número CNJ: 0825789-84.2025.8.18.0140
 📅 Queremos capturar apenas o ANO: 2025
 🏛️ E também o código do Tribunal: 18</div>
 
-**Os parênteses dizem: "Encontre isso, mas me dê apenas esta parte!"**
+<p><strong>Os parênteses dizem: "Encontre isso, mas me dê apenas esta parte!"</strong></p>
 
 <h3>🏛️ Versão para Tribunal</h3>
 
-<div class="code-block">
-padrao_tribunal = re.compile(r'\d{7}-\d{2}\.\d{4}\.\d\.(\d{2})\.\d{4}')
+<div class="code-block">padrao_tribunal = re.compile(r'\d{7}-\d{2}\.\d{4}\.\d\.(\d{2})\.\d{4}')
 
 # Dicionário dos tribunais
 TRIBUNAIS = {
@@ -533,8 +566,7 @@ for numero in df['cd_atendimento']:
         tribunais.append(None)
 
 df['tribunal'] = tribunais
-df['tribunal'].value_counts()
-</div>
+df['tribunal'].value_counts()</div>
 
 <div class="output">tribunal
 TJAM    5065
@@ -549,8 +581,6 @@ TJMG     701</div>
 <div class="cat-gif">
     <img src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif" alt="Cat with graduation cap">
 </div>
-
----
 
 <div style="text-align: center; margin-top: 50px; padding: 20px; background-color: #f6f8fa; border-radius: 8px;">
 <h3>🎉 Análise Concluída!</h3>
